@@ -85,7 +85,31 @@ python3 pipeline_sync.py --pipeline "wg_universal_v5_compress" --file ./new-scri
 ```
 
 Either way you see every site with token / name status, then pick numbers, then per
-selected site a diff and a confirm prompt.
+selected site a diff and a confirm prompt. The two prompts below are the real screen,
+so the choices are visible before you run it.
+
+Pick sites. Only rows marked `✔ 有這條` can be chosen. Type the numbers you want
+(`0,1`), or `all` for every usable row. A grey strikethrough row, and any number you
+repeat, is ignored.
+
+```text
+== 檢查每一站（token 與 pipeline「my-pipeline」）==
+  0) id1/dev-test  ✔ 有這條
+  1) id1/staging  ✔ 有這條
+  2) id1/prod  ✘ 沒有這條，不可選
+
+要推的站（看上面的編號；逗號分隔或 all；灰色／刪除線的會被忽略）: 0,1
+```
+
+Then each chosen site asks again. `y` writes that site, `n` skips it, `q` stops.
+
+```text
+================ id1/dev-test ================
+  pipeline: my-pipeline  (uuid pl_…)
+  --- diff (current → new) ---
+  …
+  → 上這站？ y=上 / n=跳過 / q=結束:
+```
 
 `--dry-run` (also `--dryrun`) walks the same path — list, pick, per-site diff — but does
 not backup and does not POST. It works on a forward sync and on `--rollback`. Without it,
