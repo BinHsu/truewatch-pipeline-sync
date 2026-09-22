@@ -109,11 +109,23 @@ def classify_site(e, pipeline):
     return "ambiguous", "✘ 同名 %d 條，不可選" % n, False
 
 
+def unique_in_order(nums):
+    """First occurrence wins. A repeated site id must not be applied twice."""
+    seen = set()
+    out = []
+    for n in nums:
+        if n in seen:
+            continue
+        seen.add(n)
+        out.append(n)
+    return out
+
+
 def parse_site_picks(raw, scanned):
     """Map typed n / all onto selectable rows. Unusable ids are ignored, not fatal."""
     by_n = {row["n"]: row for row in scanned}
     if raw.strip() == "all":
-        wanted = [row["n"] for row in scanned]
+        wanted = unique_in_order(row["n"] for row in scanned)
     else:
         wanted = []
         for tok in raw.replace(",", " ").split():
@@ -121,6 +133,7 @@ def parse_site_picks(raw, scanned):
                 wanted.append(int(tok))
             except ValueError:
                 sys.exit("站編號不是數字: %s" % tok)
+        wanted = unique_in_order(wanted)
     chosen, ignored = [], []
     for n in wanted:
         row = by_n.get(n)

@@ -17,7 +17,7 @@ macOS.
   **before you pick numbers.** A dead token is greyed out with a strikethrough and cannot
   be selected. A missing or non-unique name is marked on that row and cannot be selected
   either — fix the pipeline name and run again. Typing an unusable `n` is ignored, not a
-  reason to abort the rest.
+  reason to abort the rest. A repeated `n` is kept once, in the order you first typed it.
 - There is **no `--sites` flag.** Numbers only make sense after you have seen that list.
 - **Pass 2, per site:** resolve the pipeline name to its uuid (searches `local` then
   `central`); if the name matches 0 or more than 1 pipeline on that site, it **skips that

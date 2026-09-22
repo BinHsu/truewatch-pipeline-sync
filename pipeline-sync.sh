@@ -43,6 +43,18 @@ done
 command -v jq   >/dev/null || { echo "need jq";   exit 1; }
 command -v curl >/dev/null || { echo "need curl"; exit 1; }
 
+dedupe_ns() { # stdin: one id per line. First occurrence only.
+  local seen=" " n
+  while IFS= read -r n; do
+    [ -n "$n" ] || continue
+    case "$seen" in
+      *" $n "*) continue ;;
+    esac
+    seen="${seen}${n} "
+    printf '%s\n' "$n"
+  done
+}
+
 ask() {
   local p="$1" v=""
   if [ -r /dev/tty ] && [ -t 1 ]; then
@@ -403,9 +415,9 @@ run_rollback() {
   [ -n "$SITES" ] || { echo "沒有選到任何站。" >&2; exit 1; }
   local SEL_NS
   if [ "$SITES" = "all" ]; then
-    SEL_NS="$(printf '%s\n' "${SCAN_N[@]}")"
+    SEL_NS="$(printf '%s\n' "${SCAN_N[@]}" | dedupe_ns)"
   else
-    SEL_NS="$(printf '%s' "$SITES" | tr ', ' '\n\n' | sed '/^$/d')"
+    SEL_NS="$(printf '%s' "$SITES" | tr ', ' '\n\n' | sed '/^$/d' | dedupe_ns)"
   fi
   declare -a TARGETS=() TARGET_BACKUPS=()
   while IFS= read -r n; do
@@ -506,9 +518,9 @@ SITES="$(ask '要推的站（看上面的編號；逗號分隔或 all；灰色�
 [ -n "$SITES" ] || { echo "沒有選到任何站。" >&2; exit 1; }
 
 if [ "$SITES" = "all" ]; then
-  SEL_NS="$(printf '%s\n' "${SCAN_N[@]}")"
+  SEL_NS="$(printf '%s\n' "${SCAN_N[@]}" | dedupe_ns)"
 else
-  SEL_NS="$(printf '%s' "$SITES" | tr ', ' '\n\n' | sed '/^$/d')"
+  SEL_NS="$(printf '%s' "$SITES" | tr ', ' '\n\n' | sed '/^$/d' | dedupe_ns)"
 fi
 
 declare -a TARGETS=()
