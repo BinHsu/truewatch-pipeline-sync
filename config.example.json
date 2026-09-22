@@ -1,0 +1,5 @@
+[
+  { "n": 0, "region": "id1", "ws_name": "dev-test", "ws_uuid": "wksp_xxx", "host": "id1-openapi.truewatch.com", "token": "" },
+  { "n": 1, "region": "ap2", "ws_name": "try-env",  "ws_uuid": "wksp_xxx", "host": "ap2-openapi.truewatch.com", "token": "" },
+  { "n": 2, "region": "eu1", "ws_name": "prod-a",   "ws_uuid": "wksp_xxx", "host": "eu1-openapi.truewatch.com", "token": "" }
+]

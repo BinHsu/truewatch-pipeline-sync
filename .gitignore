@@ -1,0 +1,10 @@
+# operator config holds DF-API-KEY tokens
+config.json
+config.json.*
+
+# pre-write snapshots
+backups/
+
+__pycache__/
+*.pyc
+.DS_Store
