@@ -5,6 +5,26 @@ config.json.*
 # pre-write snapshots
 backups/
 
+# packaging output and the local operator tree (not part of the published tool)
+dist/
+.claude/
+.githooks/
+.github/
+.semgrep/
+AGENTS.cases/
+AGENTS.md
+CLAUDE.md
+PRODUCT_SENSE.md
+SECURITY.md
+bin/
+conventions.md
+docs/
+harness/
+package.sh
+scripts/
+tests/
+tools/
+
 __pycache__/
 *.pyc
 .DS_Store
